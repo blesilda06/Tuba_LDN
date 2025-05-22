@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Municipality of Tuba | Official Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2c7be5;
+      --primary-dark: #1a68d1;
+      --secondary: #ffcc00;
+      --accent: #28a745;
+      --dark: #1a2b3c;
+      --light: #f8f9fa;
+      --text: #333;
+      --text-light: #6c757d;
+      --border-radius: 12px;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                  url('Municipal-Hall.2.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+
+    /* Header with animated gradient */
+    header {
+      background: linear-gradient(135deg, rgba(44, 123, 229, 0.9) 0%, rgba(26, 43, 60, 0.9) 100%);
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 45%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 55%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(30deg);
+      animation: shine 6s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    header .tagline {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      font-style: italic;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    header .instruction {
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      font-weight: 500;
+    }
+
+    /* Main content area */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    /* Auth card container */
+    .auth-container {
+      width: 100%;
+      max-width: 480px;
+      perspective: 1000px;
+    }
+
+    /* Auth card with flip animation */
+    .auth-card {
+      width: 100%;
+      height: auto;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .auth-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    /* Card faces */
+    .card-face {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      backface-visibility: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: var(--border-radius);
+      padding: 2.5rem;
+      box-shadow: var(--box-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-face.back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: rotateY(180deg);
+    }
+
+    /* Logo with pulse animation */
+    .logo-container {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .logo-container img {
+      width: 100px;
+      height: auto;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+    }
+
+    /* Card title */
+    .card-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--light);
+      position: relative;
+    }
+
+    .card-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--secondary);
+      border-radius: 3px;
+    }
+
+    /* Form styles */
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--light);
+    }
+
+    .form-control {
+      position: relative;
+    }
+
+    .form-control input {
+      width: 100%;
+      padding: 0.9rem 1rem 0.9rem 2.8rem;
+      font-size: 1rem;
+      border-radius: var(--border-radius);
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      transition: var(--transition);
+    }
+
+    .form-control input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.3);
+    }
+
+    .form-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .password-toggle:hover {
+      color: var(--primary);
+    }
+
+    /* Submit button */
+    .submit-btn {
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      border: none;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Switch form link */
+    .switch-form {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .switch-btn {
+      background: none;
+      border: none;
+      color: var(--secondary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .switch-btn:hover {
+      color: #e6b800;
+    }
+
+    /* Main dashboard page */
+    .dashboard {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius);
+      padding: 2.5rem;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      color: var(--text);
+    }
+
+    .dashboard h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .dashboard p {
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      margin: 0.5rem;
+    }
+
+    .dashboard-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .dashboard-btn.secondary {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+
+    .dashboard-btn.secondary:hover {
+      background: #e6b800;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(26, 43, 60, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-link {
+      color: var(--light);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      main {
+        padding: 1.5rem;
+      }
+      
+      .card-face {
+        padding: 2rem;
+      }
+      
+      .dashboard {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .card-face {
+        padding: 1.5rem;
+      }
+      
+      .logo-container img {
+        width: 80px;
+      }
+      
+      .form-control input {
+        padding: 0.8rem 1rem 0.8rem 2.5rem;
+      }
+      
+      .dashboard {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      header {
+        padding: 1.2rem;
+      }
+      
+      .card-face {
+        padding: 1.2rem;
+      }
+      
+      .form-control input {
+        padding: 0.7rem 1rem 0.7rem 2.3rem;
+        font-size: 0.9rem;
+      }
+      
+      .submit-btn {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1>Municipality of Tuba</h1>
+      <p class="tagline">"With its stunning landscapes, lush pine forests, and cool climate, perfect for outdoor adventures like hiking and exploring waterfalls"</p>
+      <p class="instruction">Please sign in or log in to access community services</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Auth Container with Flip Animation -->
+    <div class="auth-container">
+      <div class="auth-card" id="authCard">
+        <!-- Sign Up Face (Front) -->
+        <div class="card-face front">
+          <div class="logo-container">
+            <img src="tuba logo.png" alt="Municipality of Tuba Logo">
+          </div>
+          <h2 class="card-title">Create Account</h2>
+          <form class="auth-form" onsubmit="signIn(event)">
+            <div class="form-group">
+              <label for="newUsername">Username</label>
+              <div class="form-control">
+                <i class="fas fa-user form-icon"></i>
+                <input type="text" id="newUsername" placeholder="Enter your username" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">Password</label>
+              <div class="form-control">
+                <i class="fas fa-lock form-icon"></i>
+                <input type="password" id="newPassword" placeholder="Create a password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('newPassword', this)"></i>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-user-plus"></i> Sign Up
+            </button>
+          </form>
+          <div class="switch-form">
+            <button class="switch-btn" onclick="flipCard()">
+              <i class="fas fa-sign-in-alt"></i> Already have an account? Log In
+            </button>
+          </div>
+        </div>
+        
+        <!-- Log In Face (Back) -->
+        <div class="card-face back">
+          <div class="logo-container">
+            <img src="tuba logo.png" alt="Municipality of Tuba Logo">
+          </div>
+          <h2 class="card-title">Welcome Back</h2>
+          <form class="auth-form" onsubmit="logIn(event)">
+            <div class="form-group">
+              <label for="loginUsername">Username</label>
+              <div class="form-control">
+                <i class="fas fa-user form-icon"></i>
+                <input type="text" id="loginUsername" placeholder="Enter your username" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <div class="form-control">
+                <i class="fas fa-lock form-icon"></i>
+                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-sign-in-alt"></i> Log In
+            </button>
+          </form>
+          <div class="switch-form">
+            <button class="switch-btn" onclick="flipCard()">
+              <i class="fas fa-user-plus"></i> Don't have an account? Sign Up
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard (After Login) -->
+    <div class="dashboard" id="dashboard">
+      <div class="logo-container">
+        <img src="tuba logo.png" alt="Municipality of Tuba Logo">
+      </div>
+      <h2>Welcome to Tuba!</h2>
+      <p>You are now logged in to the Municipality of Tuba official portal.</p>
+      <div>
+        <a href="padayao.html" class="dashboard-btn">
+          <i class="fas fa-info-circle"></i> About Tuba
+        </a>
+        <button onclick="logout()" class="dashboard-btn secondary">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Municipality of Tuba. All rights reserved.</p>
+    <div class="social-links">
+      <a href="https://www.facebook.com/piotuba2022/" class="social-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.youtube.com/watch?v=D9C3Rlzmmxo" class="social-link"><i class="fab fa-youtube"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    const users = {}; // Simple user storage
+
+    // Flip card between sign up and log in
+    function flipCard() {
+      const authCard = document.getElementById('authCard');
+      authCard.classList.toggle('flipped');
+    }
+
+    // Toggle password visibility
+    function togglePassword(inputId, icon) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    // Sign up new user and automatically log them in
+    function signIn(event) {
+      event.preventDefault();
+      const username = document.getElementById('newUsername').value.trim();
+      const password = document.getElementById('newPassword').value.trim();
+
+      if (!username || !password) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      if (users[username]) {
+        alert('Username already exists!');
+        return;
+      }
+
+      // Store the new user
+      users[username] = password;
+      
+      // Automatically log the user in
+      document.querySelector('.auth-container').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      
+      // Clear the sign up form
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newPassword').value = '';
+    }
+
+    // Log in existing user
+    function logIn(event) {
+      event.preventDefault();
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!username || !password) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      if (users[username] && users[username] === password) {
+        // Show dashboard
+        document.querySelector('.auth-container').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+      } else {
+        alert('Invalid username or password.');
+      }
+    }
+
+    // Log out user
+    function logout() {
+      document.querySelector('.auth-container').style.display = 'block';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginUsername').value = '';
+      document.getElementById('loginPassword').value = '';
+    }
+  </script>
+</body>
+</html>
